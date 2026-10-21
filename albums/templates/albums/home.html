@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page_title }}</title>
+    <link rel="stylesheet" href="{% static 'albums/css/style.css' %}">
+</head>
+<body>
+    <h1>{{ page_title }}</h1>
+    <p>{{ welcome_message }}</p>
+
+    <h2>Albums</h2>
+    <div class="album-grid">
+        {% for album in albums %}
+            <div class="album-card">
+                <h3>{{ album.title }}</h3>
+                <p>{{ album.year }}</p>
+                </div>
+        {% endfor %}
+    </div>
+    
+    
+</body>
+</html>
