@@ -12,15 +12,50 @@
     <p>{{ welcome_message }}</p>
 
     <h2>Albums</h2>
+
     <div class="album-grid">
         {% for album in albums %}
             <div class="album-card">
                 <h3>{{ album.title }}</h3>
                 <p>{{ album.year }}</p>
-                </div>
+            </div>
         {% endfor %}
     </div>
-    
-    
+
+    <h2>Add New Album</h2>
+
+    <!-- Display error message if input is invalid -->
+    {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+    {% endif %}
+
+    <!-- Display success message if album is added -->
+    {% if success_message %}
+        <p class="success-message">{{ success_message }}</p>
+    {% endif %}
+
+    <!-- Add album form -->
+    <form method="POST">
+        {% csrf_token %}
+
+        <label for="album-title">Album Title:</label>
+        <input
+            type="text"
+            id="album-title"
+            name="album_title"
+            value="{{ form_title }}"
+        >
+
+        <label for="album-year">Year:</label>
+        <input
+            type="number"
+            id="album-year"
+            name="album_year"
+            value="{{ form_year }}"
+        >
+
+        <button type="submit">Add Album</button>
+    </form>
+
 </body>
 </html>

@@ -42,6 +42,19 @@ main {
     color: #6c584c;
 }
 
+/* Form feedback messages */
+.error-message {
+    color: #b42318;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.success-message {
+    color: #17663a;
+    padding: 12px;
+    border-radius: 8px;
+}
+
 /* Mobile layout */
 @media (max-width: 700px) {
     .album-grid {
