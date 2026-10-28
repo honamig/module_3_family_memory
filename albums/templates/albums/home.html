@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -8,54 +9,80 @@
     <link rel="stylesheet" href="{% static 'albums/css/style.css' %}">
 </head>
 <body>
-    <h1>{{ page_title }}</h1>
-    <p>{{ welcome_message }}</p>
 
-    <h2>Albums</h2>
+    <header>
+        <h1>{{ page_title }}</h1>
+        <p>{{ welcome_message }}</p>
+    </header>
 
-    <div class="album-grid">
-        {% for album in albums %}
-            <div class="album-card">
-                <h3>{{ album.title }}</h3>
-                <p>{{ album.year }}</p>
+    <main>
+        <section>
+            <h2>Your Albums</h2>
+
+            <div class="album-grid">
+                {% for album in albums %}
+                    <div class="album-card">
+                        <h3>{{ album.title }}</h3>
+                        <p>{{ album.year }}</p>
+                    </div>
+                {% empty %}
+                    <p>No albums yet. Create your first album!</p>
+                {% endfor %}
             </div>
-        {% endfor %}
-    </div>
+        </section>
 
-    <h2>Add New Album</h2>
+        <section class="form-section">
+            <h2>Create New Album</h2>
 
-    <!-- Display error message if input is invalid -->
-    {% if error_message %}
-        <p class="error-message">{{ error_message }}</p>
-    {% endif %}
+            {% if error_message %}
+                <p class="error-message">{{ error_message }}</p>
+            {% endif %}
 
-    <!-- Display success message if album is added -->
-    {% if success_message %}
-        <p class="success-message">{{ success_message }}</p>
-    {% endif %}
+            {% if success_message %}
+                <p class="success-message">{{ success_message }}</p>
+            {% endif %}
 
-    <!-- Add album form -->
-    <form method="POST">
+            <form method="POST">
+                {% csrf_token %}
+
+                <label for="album-title">Album Title</label>
+                <input
+                    type="text"
+                    id="album-title"
+                    name="album_title"
+                    placeholder="e.g. Summer Vacation"
+                    value="{{ form_title }}"
+                >
+
+                <label for="album-year">Year</label>
+                <input
+                    type="number"
+                    id="album-year"
+                    name="album_year"
+                    placeholder="e.g. 2024"
+                    value="{{ form_year }}"
+                >
+
+                <button type="submit" name="create_album">
+                    Create Album
+                </button>
+            </form>
+        </section>
+        <!-- Upload Photo Section -->
+<section class="form-section">
+    <h2>Upload Photo</h2>
+
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <label for="album-title">Album Title:</label>
-        <input
-            type="text"
-            id="album-title"
-            name="album_title"
-            value="{{ form_title }}"
-        >
+        {{ photo_form.as_p }}
 
-        <label for="album-year">Year:</label>
-        <input
-            type="number"
-            id="album-year"
-            name="album_year"
-            value="{{ form_year }}"
-        >
-
-        <button type="submit">Add Album</button>
+        <button type="submit" name="upload_photo">
+            Upload Photo
+        </button>
     </form>
+</section>
+    </main>
 
 </body>
 </html>
